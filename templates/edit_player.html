@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Edit Player{% endblock %}
+{% block content %}
+<h2>Edit Player</h2>
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label>Player Name</label>
+        <input type="text" name="name" class="form-control" value="{{ player[1] }}" required />
+    </div>
+    <div class="mb-3">
+        <label>Team</label>
+        <select name="team_id" class="form-select" required>
+            {% for team in teams %}
+            <option value="{{ team[0] }}" {% if team[0] == player[2] %}selected{% endif %}>{{ team[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Goals Scored</label>
+        <input type="number" name="goals" class="form-control" min="0" value="{{ player[3] }}" />
+    </div>
+    <div class="mb-3">
+        <label>Awards / Medals</label>
+        <input type="text" name="awards" class="form-control" value="{{ player[4] }}" />
+    </div>
+    <div class="mb-3">
+        <label>Position Played</label>
+        <input type="text" name="position" class="form-control" value="{{ player[5] }}" />
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" name="captain" class="form-check-input" id="captainCheck" {% if player[6] == 1 %}checked{% endif %} />
+        <label class="form-check-label" for="captainCheck">Captain</label>
+    </div>
+    <div class="mb-3">
+        <label>Current Photo</label><br/>
+        {% if player[7] %}
+        <img src="{{ url_for('static', filename='uploads/' ~ player[7]) }}" class="player-photo" alt="Photo" />
+        {% else %}
+        No photo
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        <label>Change Photo</label>
+        <input type="file" name="photo" class="form-control" accept="image/*" />
+    </div>
+    <button class="btn btn-primary">Save Changes</button>
+    <a href="{{ url_for('manage_players') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

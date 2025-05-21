@@ -1,0 +1,53 @@
+ {% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Our Teams</h1>
+    <div class="row">
+        {% for team in team_data %}
+            <div class="col-md-6 mb-5">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">{{ team.name }}</h3>
+                        <small>Coach: {{ team.coach }}</small>
+                    </div>
+                    <div class="card-body">
+                        {% if team.logo %}
+                            <img src="{{ url_for('static', filename='team_logos/' ~ team.logo) }}" class="img-fluid mb-3" style="max-height: 100px;">
+                        {% endif %}
+                        {% if team.players %}
+                            <div class="row">
+                                {% for player in team.players %}
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card h-100">
+                                            {% if player.photo %}
+                                                <img src="{{ url_for('static', filename='player_photos/' ~ player.photo) }}" class="card-img-top" style="max-height: 150px; object-fit: cover;">
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    {{ player.name }}
+                                                    {% if player.is_captain %}
+                                                        <span class="badge bg-warning text-dark">Captain</span>
+                                                    {% endif %}
+                                                </h5>
+                                                <p class="card-text">
+                                                    <strong>Position:</strong> {{ player.position }}<br>
+                                                    <strong>Goals:</strong> {{ player.goals }}<br>
+                                                    <strong>Medals:</strong> {{ player.medals }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No players listed yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

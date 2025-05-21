@@ -1,0 +1,98 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>School Sports Team</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url("/static/uploads/sports_background.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: #fff;
+        }
+
+        label {
+            color: #ddd;
+        }
+
+        .form-control {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+        }
+
+        .card img {
+            max-height: 150px;
+            object-fit: cover;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 40px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="{{ url_for('home') }}">🏆 Sports Team</a>
+    <div class="ml-auto">
+        {% if session.get('admin') %}
+            <a class="btn btn-light" href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a class="btn btn-light" href="{{ url_for('login') }}">Admin Login</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-warning">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    &copy; {{ 2025 }} VOTESA School Sports Team Website.Created by Ikenna Victor (Big Vibez) All rights reserved.
+</footer>
+
+</body>
+</html>

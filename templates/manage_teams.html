@@ -1,0 +1,55 @@
+ {% extends 'base.html' %}
+{% block title %}Manage Teams{% endblock %}
+{% block content %}
+<h2>Manage Teams</h2>
+
+<!-- Add team form -->
+<form method="post" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+        <label>Team Name</label>
+        <input type="text" name="name" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Coach Name</label>
+        <input type="text" name="coach" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Team Logo</label>
+        <input type="file" name="logo" class="form-control" accept="image/*" />
+    </div>
+    <button class="btn btn-success">Add Team</button>
+</form>
+
+<!-- List of teams -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Logo</th>
+            <th>Name</th>
+            <th>Coach</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in teams %}
+        <tr>
+            <td>
+                {% if team[3] %}
+                <img src="{{ url_for('static', filename='uploads/' ~ team[3]) }}" class="team-logo" alt="Logo" />
+                {% else %}
+                No logo
+                {% endif %}
+            </td>
+            <td>{{ team[1] }}</td>
+            <td>{{ team[2] }}</td>
+            <td>
+                <a href="{{ url_for('edit_team', team_id=team[0]) }}" class="btn btn-sm btn-primary">Edit</a>
+                <form action="{{ url_for('delete_team', team_id=team[0]) }}" method="post" style="display:inline;" onsubmit="return confirm('Delete this team?');">
+                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

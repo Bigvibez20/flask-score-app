@@ -1,0 +1,51 @@
+  {% extends 'base.html' %}
+
+{% block title %}Manage Players{% endblock %}
+
+{% block content %}
+<h2>Manage Players</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Player Name" required><br>
+    <select name="team_id" required>
+        <option value="">Select Team</option>
+        {% for team in teams %}
+            <option value="{{ team[0] }}">{{ team[1] }}</option>
+        {% endfor %}
+    </select><br>
+    <input type="text" name="goals" placeholder="Goals"><br>
+    <input type="text" name="awards" placeholder="Awards"><br>
+    <input type="text" name="position" placeholder="Position"><br>
+    <label>Captain:</label>
+    <input type="checkbox" name="captain" value="yes"><br>
+    <input type="file" name="image"><br>
+    <button type="submit">Add Player</button>
+</form>
+
+<hr>
+
+<h3>Players List</h3>
+<table border="1">
+    <tr>
+        <th>Name</th><th>Team</th><th>Goals</th><th>Awards</th><th>Position</th><th>Captain</th><th>Image</th>
+    </tr>
+    {% for player in players %}
+    <tr>
+        <td>{{ player[1] }}</td>
+        <td>{{ player[7] }}</td>
+        <td>{{ player[2] }}</td>
+        <td>{{ player[3] }}</td>
+        <td>{{ player[4] }}</td>
+        <td>{{ player[5] }}</td>
+        <td>
+            {% if player[6] %}
+                <img src="{{ url_for('static', filename='uploads/' ~ player[6]) }}" width="50">
+            {% else %}
+                No Image
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
